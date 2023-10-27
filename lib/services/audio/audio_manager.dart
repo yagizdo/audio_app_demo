@@ -3,9 +3,6 @@ import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 
 class AudioManager extends IAudioManager {
-  AudioManager() {
-    init();
-  }
 
   final AudioPlayer _audioPlayer = AudioPlayer();
 
