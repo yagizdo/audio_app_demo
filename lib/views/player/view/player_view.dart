@@ -1,3 +1,4 @@
+import 'package:audio_app_demo/widgets/main_widgets/main_layout.dart';
 import 'package:flutter/cupertino.dart';
 
 class PlayerView extends StatelessWidget {
@@ -5,7 +6,7 @@ class PlayerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildBody(context);
+    return MainLayout(content: _buildBody(context));
   }
 
   Widget _buildBody(BuildContext context) {

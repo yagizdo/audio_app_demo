@@ -19,8 +19,8 @@ class AppTextStyle {
   static TextStyle homeText() {
     return const TextStyle(
       color: Colors.white,
-      fontSize: 22,
-      fontWeight: FontWeight.w700,
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
       letterSpacing: -0.2,
       overflow: TextOverflow.ellipsis,
     );
