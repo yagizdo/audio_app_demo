@@ -1,4 +1,5 @@
 import 'package:audio_app_demo/views/home_view.dart';
+import 'package:audio_app_demo/views/player/view/player_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,11 +15,16 @@ class AppRoutes {
 
   static const splash = '/';
   static const home = '/home';
+  static const player = '/player';
 
   List<RouteBase> appRoutes = [
     GoRoute(
       path: splash,
       builder: (context, state) => const HomeView(),
+    ),
+    GoRoute(
+      path: player,
+      builder: (context, state) => const PlayerView(),
     ),
   ];
 
