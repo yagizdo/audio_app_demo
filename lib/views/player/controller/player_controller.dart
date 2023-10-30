@@ -1,6 +1,9 @@
-import 'package:audio_app_demo/services/audio/audio_manager.dart';
-import 'package:audio_app_demo/utils/app_locator.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../../models/position_data.dart';
+import '../../../services/audio/audio_manager.dart';
+import '../../../utils/app_locator.dart';
 
 part 'player_controller.g.dart';
 
@@ -12,6 +15,8 @@ abstract class PlayerControllerBase with Store {
     positionStream = _audioManager.position.asObservable();
     bufferedPositionStream = _audioManager.bufferedPosition.asObservable();
     totalDurationStream = _audioManager.totalDuration.asObservable();
+    playerStateStream = _audioManager.playerState.asObservable();
+    positionDataStream = _audioManager.positionDataStream.asObservable();
 
   }
 
@@ -21,10 +26,16 @@ abstract class PlayerControllerBase with Store {
   ObservableStream<Duration>? positionStream;
 
   @observable
+  ObservableStream<PositionData>? positionDataStream;
+
+  @observable
   ObservableStream<Duration>? bufferedPositionStream;
 
   @observable
   ObservableStream<Duration>? totalDurationStream;
+
+  @observable
+  ObservableStream<PlayerState>? playerStateStream;
 
   @observable
   Duration totalDuration = Duration.zero;

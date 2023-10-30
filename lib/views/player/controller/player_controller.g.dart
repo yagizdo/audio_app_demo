@@ -25,6 +25,22 @@ mixin _$PlayerController on PlayerControllerBase, Store {
     });
   }
 
+  late final _$positionDataStreamAtom =
+      Atom(name: 'PlayerControllerBase.positionDataStream', context: context);
+
+  @override
+  ObservableStream<PositionData>? get positionDataStream {
+    _$positionDataStreamAtom.reportRead();
+    return super.positionDataStream;
+  }
+
+  @override
+  set positionDataStream(ObservableStream<PositionData>? value) {
+    _$positionDataStreamAtom.reportWrite(value, super.positionDataStream, () {
+      super.positionDataStream = value;
+    });
+  }
+
   late final _$bufferedPositionStreamAtom = Atom(
       name: 'PlayerControllerBase.bufferedPositionStream', context: context);
 
@@ -55,6 +71,22 @@ mixin _$PlayerController on PlayerControllerBase, Store {
   set totalDurationStream(ObservableStream<Duration>? value) {
     _$totalDurationStreamAtom.reportWrite(value, super.totalDurationStream, () {
       super.totalDurationStream = value;
+    });
+  }
+
+  late final _$playerStateStreamAtom =
+      Atom(name: 'PlayerControllerBase.playerStateStream', context: context);
+
+  @override
+  ObservableStream<PlayerState>? get playerStateStream {
+    _$playerStateStreamAtom.reportRead();
+    return super.playerStateStream;
+  }
+
+  @override
+  set playerStateStream(ObservableStream<PlayerState>? value) {
+    _$playerStateStreamAtom.reportWrite(value, super.playerStateStream, () {
+      super.playerStateStream = value;
     });
   }
 
@@ -126,8 +158,10 @@ mixin _$PlayerController on PlayerControllerBase, Store {
   String toString() {
     return '''
 positionStream: ${positionStream},
+positionDataStream: ${positionDataStream},
 bufferedPositionStream: ${bufferedPositionStream},
 totalDurationStream: ${totalDurationStream},
+playerStateStream: ${playerStateStream},
 totalDuration: ${totalDuration}
     ''';
   }
