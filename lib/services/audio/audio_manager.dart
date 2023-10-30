@@ -49,11 +49,17 @@ class AudioManager extends IAudioManager {
   Stream<Duration> get position => _audioPlayer.positionStream;
 
   @override
+  Stream<Duration> get bufferedPosition => _audioPlayer.bufferedPositionStream;
+
+  @override
   Stream<Duration> get totalDuration =>
       _audioPlayer.durationStream.map((duration) => duration ?? Duration.zero);
 
   @override
-  Future<void> dispose() {
-    return _audioPlayer.dispose();
+  Stream<PlayerState> get playerState => _audioPlayer.playerStateStream;
+
+  @override
+  Future<void> dispose() async {
+    await _audioPlayer.dispose();
   }
 }
