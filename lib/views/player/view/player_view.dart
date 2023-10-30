@@ -17,7 +17,7 @@ class PlayerView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     final playerViewModel = getIt<PlayerController>();
-    playerViewModel.load("https://ia601802.us.archive.org/8/items/IGM-V7/IGM%20-%20Vol.%207/25%20Diablo%20-%20Tristram%20%28Blizzard%29.mp3").then((value) => playerViewModel.play());
+    playerViewModel.load("https://Hippopcharts.com/music/uploads/2023/06/Elton_John_-_I_m_Still_Standing-Hippopcharts.com.mp3").then((value) => playerViewModel.play());
     Duration? lastPosition;
 
     return Column(
