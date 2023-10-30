@@ -1,3 +1,4 @@
+import 'package:audio_app_demo/models/position_data.dart';
 import 'package:just_audio/just_audio.dart';
 
 abstract class IAudioManager {
@@ -6,6 +7,7 @@ abstract class IAudioManager {
   Future<void> play();
   Future<void> pause();
   Future<void> seekTo(Duration position);
+  Stream<PositionData> get positionDataStream;
   Stream<Duration> get position;
   Stream<Duration> get bufferedPosition;
   Stream<Duration> get totalDuration;
