@@ -20,28 +20,49 @@ class AudioControls extends StatelessWidget {
         final processingState = playerState?.processingState;
         final playing = playerState?.playing;
         if (!(playing ?? false)) {
-          return _buildPlayButton(
-            playing: playing ?? false,
-            onPressed: () {
-              playerController.play();
-            },
-          );
-        } else if (processingState != ProcessingState.completed) {
-          return _buildPlayButton(
-            playing: playing ?? false,
-            onPressed: () {
-              playerController.pause();
-            },
-          );
-        }
-        return _buildPlayButton(
-          playing: playing ?? false,
-          onPressed: () {
-            playerController.seekTo(Duration.zero);
+          return _buildButtonsRow(playing ?? false, (){
             playerController.play();
-          },
-        );
+          });
+        } else if (processingState != ProcessingState.completed) {
+          return _buildButtonsRow(playing ?? false, (){
+            playerController.pause();
+          });
+        }
+        return _buildButtonsRow(playing ?? false, (){
+          playerController.seekTo(Duration.zero);
+          playerController.play();
+        });
       },
+    );
+  }
+
+  Widget _buildButtonsRow(bool isPlaying, Function onPressed) {
+    final PlayerController playerController = getIt<PlayerController>();
+    return Row(
+      children: [
+        _buildBackwardsForwards(false),
+        _buildPlayButton(
+          playing: isPlaying,
+          onPressed: onPressed,
+        ),
+        _buildBackwardsForwards(true),
+      ],
+    );
+  }
+
+  Widget _buildBackwardsForwards(bool isForward) {
+    final PlayerController playerController = getIt<PlayerController>();
+    return IconButton(
+      onPressed: () {
+        if (isForward) {
+
+        } else {
+
+        }
+      },
+      icon: isForward ? const Icon(Icons.forward_10) : const Icon(Icons.replay_10),
+      iconSize: 80,
+      color: Colors.white,
     );
   }
 
