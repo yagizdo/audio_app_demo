@@ -20,34 +20,39 @@ class AudioControls extends StatelessWidget {
         final processingState = playerState?.processingState;
         final playing = playerState?.playing;
         if (!(playing ?? false)) {
-          return IconButton(
+          return _buildPlayButton(
+            playing: playing ?? false,
             onPressed: () {
               playerController.play();
             },
-            icon: const Icon(Icons.play_arrow),
-            iconSize: 80,
-            color: Colors.white,
           );
         } else if (processingState != ProcessingState.completed) {
-          return IconButton(
+          return _buildPlayButton(
+            playing: playing ?? false,
             onPressed: () {
               playerController.pause();
             },
-            icon: const Icon(Icons.pause),
-            iconSize: 80,
-            color: Colors.white,
           );
         }
-        return IconButton(
+        return _buildPlayButton(
+          playing: playing ?? false,
           onPressed: () {
             playerController.seekTo(Duration.zero);
             playerController.play();
           },
-          icon: const Icon(Icons.play_arrow),
-          iconSize: 80,
-          color: Colors.white,
         );
       },
+    );
+  }
+
+  Widget _buildPlayButton({required bool playing, required Function onPressed}) {
+    return IconButton(
+      onPressed: () {
+        onPressed();
+      },
+      icon: playing ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
+      iconSize: 80,
+      color: Colors.white,
     );
   }
 }
