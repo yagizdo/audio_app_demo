@@ -1,19 +1,19 @@
 import 'package:audio_app_demo/models/position_data.dart';
+import 'package:audio_app_demo/views/player/widget/audio_controls.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/app_locator.dart';
 import '../controller/player_controller.dart';
 
-class AudioProgress extends StatefulWidget {
-
-  const AudioProgress({super.key});
+class AudioProgressControls extends StatefulWidget {
+  const AudioProgressControls({super.key});
 
   @override
-  State<AudioProgress> createState() => _AudioProgressState();
+  State<AudioProgressControls> createState() => _AudioProgressControlsState();
 }
 
-class _AudioProgressState extends State<AudioProgress> {
+class _AudioProgressControlsState extends State<AudioProgressControls> {
   late final PlayerController playerController;
 
   @override
@@ -29,15 +29,18 @@ class _AudioProgressState extends State<AudioProgress> {
 
   Widget _buildBody(context) {
     return StreamBuilder<PositionData>(
-      stream: playerController.positionDataStream,
-      builder: (context, state) {
-        return Column(
-          children: [
-            _buildProgressBar(state),
-          ],
-        );
-      }
-    );
+        stream: playerController.positionDataStream,
+        builder: (context, state) {
+          return Column(
+            children: [
+              _buildProgressBar(state),
+              AudioControls(
+                currentPosition: state.data?.position ?? Duration.zero,
+                totalDuration: state.data?.duration ?? Duration.zero,
+              ),
+            ],
+          );
+        });
   }
 
   Widget _buildProgressBar(AsyncSnapshot<PositionData> state) {
