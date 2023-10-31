@@ -3,6 +3,7 @@ import 'package:audio_app_demo/views/player/controller/player_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
+
 class AudioControls extends StatelessWidget {
   const AudioControls({super.key});
 
@@ -39,6 +40,7 @@ class AudioControls extends StatelessWidget {
   Widget _buildButtonsRow(bool isPlaying, Function onPressed) {
     final PlayerController playerController = getIt<PlayerController>();
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildBackwardsForwards(false),
         _buildPlayButton(
@@ -51,14 +53,11 @@ class AudioControls extends StatelessWidget {
   }
 
   Widget _buildBackwardsForwards(bool isForward) {
+    const int skipDurationSeconds = 15;
     final PlayerController playerController = getIt<PlayerController>();
     return IconButton(
       onPressed: () {
-        if (isForward) {
 
-        } else {
-
-        }
       },
       icon: isForward ? const Icon(Icons.forward_10) : const Icon(Icons.replay_10),
       iconSize: 80,
