@@ -90,6 +90,22 @@ mixin _$PlayerController on PlayerControllerBase, Store {
     });
   }
 
+  late final _$sequenceStateStreamAtom =
+      Atom(name: 'PlayerControllerBase.sequenceStateStream', context: context);
+
+  @override
+  ObservableStream<SequenceState?>? get sequenceStateStream {
+    _$sequenceStateStreamAtom.reportRead();
+    return super.sequenceStateStream;
+  }
+
+  @override
+  set sequenceStateStream(ObservableStream<SequenceState?>? value) {
+    _$sequenceStateStreamAtom.reportWrite(value, super.sequenceStateStream, () {
+      super.sequenceStateStream = value;
+    });
+  }
+
   late final _$totalDurationAtom =
       Atom(name: 'PlayerControllerBase.totalDuration', context: context);
 
@@ -162,6 +178,7 @@ positionDataStream: ${positionDataStream},
 bufferedPositionStream: ${bufferedPositionStream},
 totalDurationStream: ${totalDurationStream},
 playerStateStream: ${playerStateStream},
+sequenceStateStream: ${sequenceStateStream},
 totalDuration: ${totalDuration}
     ''';
   }

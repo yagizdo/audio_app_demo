@@ -17,7 +17,7 @@ abstract class PlayerControllerBase with Store {
     totalDurationStream = _audioManager.totalDuration.asObservable();
     playerStateStream = _audioManager.playerState.asObservable();
     positionDataStream = _audioManager.positionDataStream.asObservable();
-
+    sequenceStateStream = _audioManager.sequenceStateStream.asObservable();
   }
 
   final AudioManager _audioManager = getIt<AudioManager>();
@@ -36,6 +36,9 @@ abstract class PlayerControllerBase with Store {
 
   @observable
   ObservableStream<PlayerState>? playerStateStream;
+
+  @observable
+  ObservableStream<SequenceState?>? sequenceStateStream;
 
   @observable
   Duration totalDuration = Duration.zero;

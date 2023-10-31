@@ -8,6 +8,7 @@ abstract class IAudioManager {
   Future<void> pause();
   Future<void> seekTo(Duration position);
   Stream<PositionData> get positionDataStream;
+  Stream<SequenceState?> get sequenceStateStream;
   Stream<Duration> get position;
   Stream<Duration> get bufferedPosition;
   Stream<Duration> get totalDuration;

@@ -1,3 +1,4 @@
+import 'package:audio_app_demo/views/player/widget/audio_media.dart';
 import 'package:audio_app_demo/views/player/widget/audio_progress_controls.dart';
 import 'package:audio_app_demo/widgets/main_widgets/main_layout.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,7 @@ class PlayerView extends StatelessWidget {
 
     return const Column(
       children: [
+        AudioMedia(),
         AudioProgressControls(),
       ],
     );

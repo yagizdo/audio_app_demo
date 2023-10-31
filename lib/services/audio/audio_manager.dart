@@ -67,6 +67,9 @@ class AudioManager extends IAudioManager {
       _audioPlayer.durationStream.map((duration) => duration ?? Duration.zero);
 
   @override
+  Stream<SequenceState?> get sequenceStateStream => _audioPlayer.sequenceStateStream;
+
+  @override
   Stream<PlayerState> get playerState => _audioPlayer.playerStateStream;
 
   @override
