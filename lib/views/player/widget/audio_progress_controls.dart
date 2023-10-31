@@ -22,6 +22,13 @@ class _AudioProgressControlsState extends State<AudioProgressControls> {
     playerController = getIt<PlayerController>();
   }
 
+
+  @override
+  void dispose() {
+    playerController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return _buildBody(context);

@@ -16,7 +16,7 @@ abstract class PlayerControllerBase with Store {
     bufferedPositionStream = _audioManager.bufferedPosition.asObservable();
     totalDurationStream = _audioManager.totalDuration.asObservable();
     playerStateStream = _audioManager.playerState.asObservable();
-    positionDataStream = _audioManager.positionDataStream.asObservable();
+    positionDataStream = _audioManager.positionDataStream.asBroadcastStream();
     sequenceStateStream = _audioManager.sequenceStateStream.asObservable();
   }
 
@@ -26,7 +26,7 @@ abstract class PlayerControllerBase with Store {
   ObservableStream<Duration>? positionStream;
 
   @observable
-  ObservableStream<PositionData>? positionDataStream;
+  Stream<PositionData>? positionDataStream;
 
   @observable
   ObservableStream<Duration>? bufferedPositionStream;

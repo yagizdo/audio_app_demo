@@ -29,13 +29,13 @@ mixin _$PlayerController on PlayerControllerBase, Store {
       Atom(name: 'PlayerControllerBase.positionDataStream', context: context);
 
   @override
-  ObservableStream<PositionData>? get positionDataStream {
+  Stream<PositionData>? get positionDataStream {
     _$positionDataStreamAtom.reportRead();
     return super.positionDataStream;
   }
 
   @override
-  set positionDataStream(ObservableStream<PositionData>? value) {
+  set positionDataStream(Stream<PositionData>? value) {
     _$positionDataStreamAtom.reportWrite(value, super.positionDataStream, () {
       super.positionDataStream = value;
     });

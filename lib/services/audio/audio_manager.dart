@@ -74,6 +74,7 @@ class AudioManager extends IAudioManager {
 
   @override
   Future<void> dispose() async {
-    await _audioPlayer.dispose();
+    await _audioPlayer.stop();
+    //await _audioPlayer.dispose();
   }
 }
