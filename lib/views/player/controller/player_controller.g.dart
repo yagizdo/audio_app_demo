@@ -13,13 +13,13 @@ mixin _$PlayerController on PlayerControllerBase, Store {
       Atom(name: 'PlayerControllerBase.positionStream', context: context);
 
   @override
-  ObservableStream<Duration>? get positionStream {
+  Stream<Duration>? get positionStream {
     _$positionStreamAtom.reportRead();
     return super.positionStream;
   }
 
   @override
-  set positionStream(ObservableStream<Duration>? value) {
+  set positionStream(Stream<Duration>? value) {
     _$positionStreamAtom.reportWrite(value, super.positionStream, () {
       super.positionStream = value;
     });
@@ -45,13 +45,13 @@ mixin _$PlayerController on PlayerControllerBase, Store {
       name: 'PlayerControllerBase.bufferedPositionStream', context: context);
 
   @override
-  ObservableStream<Duration>? get bufferedPositionStream {
+  Stream<Duration>? get bufferedPositionStream {
     _$bufferedPositionStreamAtom.reportRead();
     return super.bufferedPositionStream;
   }
 
   @override
-  set bufferedPositionStream(ObservableStream<Duration>? value) {
+  set bufferedPositionStream(Stream<Duration>? value) {
     _$bufferedPositionStreamAtom
         .reportWrite(value, super.bufferedPositionStream, () {
       super.bufferedPositionStream = value;
@@ -62,13 +62,13 @@ mixin _$PlayerController on PlayerControllerBase, Store {
       Atom(name: 'PlayerControllerBase.totalDurationStream', context: context);
 
   @override
-  ObservableStream<Duration>? get totalDurationStream {
+  Stream<Duration>? get totalDurationStream {
     _$totalDurationStreamAtom.reportRead();
     return super.totalDurationStream;
   }
 
   @override
-  set totalDurationStream(ObservableStream<Duration>? value) {
+  set totalDurationStream(Stream<Duration>? value) {
     _$totalDurationStreamAtom.reportWrite(value, super.totalDurationStream, () {
       super.totalDurationStream = value;
     });
@@ -78,13 +78,13 @@ mixin _$PlayerController on PlayerControllerBase, Store {
       Atom(name: 'PlayerControllerBase.playerStateStream', context: context);
 
   @override
-  ObservableStream<PlayerState>? get playerStateStream {
+  Stream<PlayerState>? get playerStateStream {
     _$playerStateStreamAtom.reportRead();
     return super.playerStateStream;
   }
 
   @override
-  set playerStateStream(ObservableStream<PlayerState>? value) {
+  set playerStateStream(Stream<PlayerState>? value) {
     _$playerStateStreamAtom.reportWrite(value, super.playerStateStream, () {
       super.playerStateStream = value;
     });
@@ -94,13 +94,13 @@ mixin _$PlayerController on PlayerControllerBase, Store {
       Atom(name: 'PlayerControllerBase.sequenceStateStream', context: context);
 
   @override
-  ObservableStream<SequenceState?>? get sequenceStateStream {
+  Stream<SequenceState?>? get sequenceStateStream {
     _$sequenceStateStreamAtom.reportRead();
     return super.sequenceStateStream;
   }
 
   @override
-  set sequenceStateStream(ObservableStream<SequenceState?>? value) {
+  set sequenceStateStream(Stream<SequenceState?>? value) {
     _$sequenceStateStreamAtom.reportWrite(value, super.sequenceStateStream, () {
       super.sequenceStateStream = value;
     });

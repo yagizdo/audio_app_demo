@@ -12,33 +12,33 @@ class PlayerController = PlayerControllerBase with _$PlayerController;
 abstract class PlayerControllerBase with Store {
 
   PlayerControllerBase() {
-    positionStream = _audioManager.position.asObservable();
-    bufferedPositionStream = _audioManager.bufferedPosition.asObservable();
-    totalDurationStream = _audioManager.totalDuration.asObservable();
-    playerStateStream = _audioManager.playerState.asObservable();
+    positionStream = _audioManager.position.asBroadcastStream();
+    bufferedPositionStream = _audioManager.bufferedPosition.asBroadcastStream();
+    totalDurationStream = _audioManager.totalDuration.asBroadcastStream();
+    playerStateStream = _audioManager.playerState.asBroadcastStream();
     positionDataStream = _audioManager.positionDataStream.asBroadcastStream();
-    sequenceStateStream = _audioManager.sequenceStateStream.asObservable();
+    sequenceStateStream = _audioManager.sequenceStateStream.asBroadcastStream();
   }
 
   final AudioManager _audioManager = getIt<AudioManager>();
 
   @observable
-  ObservableStream<Duration>? positionStream;
+  Stream<Duration>? positionStream;
 
   @observable
   Stream<PositionData>? positionDataStream;
 
   @observable
-  ObservableStream<Duration>? bufferedPositionStream;
+  Stream<Duration>? bufferedPositionStream;
 
   @observable
-  ObservableStream<Duration>? totalDurationStream;
+  Stream<Duration>? totalDurationStream;
 
   @observable
-  ObservableStream<PlayerState>? playerStateStream;
+  Stream<PlayerState>? playerStateStream;
 
   @observable
-  ObservableStream<SequenceState?>? sequenceStateStream;
+  Stream<SequenceState?>? sequenceStateStream;
 
   @observable
   Duration totalDuration = Duration.zero;
