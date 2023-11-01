@@ -20,7 +20,7 @@ class PlayerView extends StatelessWidget {
 
     return const Column(
       children: [
-        //AudioMedia(),
+        AudioMedia(),
         AudioProgressControls(),
       ],
     );

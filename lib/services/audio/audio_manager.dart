@@ -11,12 +11,28 @@ class AudioManager extends IAudioManager {
 
   @override
   Future<void> init() async {
-
+    await JustAudioBackground.init(
+      androidNotificationChannelId: 'com.yagizdo.audio_app_demo.channel.audio',
+      androidNotificationChannelName: 'Audio playback',
+      rewindInterval: const Duration(seconds: 15),
+      fastForwardInterval: const Duration(seconds: 15),
+      androidNotificationOngoing: true,
+    );
   }
 
   @override
   Future<Duration> load(String url, Duration initialPosition) async {
-    return await _audioPlayer.setUrl(url, initialPosition: initialPosition) ?? Duration.zero;
+    final source = AudioSource.uri(
+      Uri.parse(url),
+      tag: MediaItem(
+        id: url,
+        title: 'Tristram = Diablo',
+        artUri:
+            Uri.parse('https://i.ytimg.com/vi/Gki_L-8v_24/maxresdefault.jpg'),
+      ),
+    );
+
+    return await _audioPlayer.setAudioSource(source, initialPosition: initialPosition, preload: true) ?? Duration.zero;
   }
 
   @override
