@@ -162,6 +162,23 @@ mixin _$PlayerController on PlayerControllerBase, Store {
     return _$seekToAsyncAction.run(() => super.seekTo(position));
   }
 
+  late final _$saveAudioCacheAsyncAction =
+      AsyncAction('PlayerControllerBase.saveAudioCache', context: context);
+
+  @override
+  Future<void> saveAudioCache(String audioName, int currentPosition) {
+    return _$saveAudioCacheAsyncAction
+        .run(() => super.saveAudioCache(audioName, currentPosition));
+  }
+
+  late final _$getAudioCacheAsyncAction =
+      AsyncAction('PlayerControllerBase.getAudioCache', context: context);
+
+  @override
+  Future<Duration?> getAudioCache(String audioName) {
+    return _$getAudioCacheAsyncAction.run(() => super.getAudioCache(audioName));
+  }
+
   late final _$disposeAsyncAction =
       AsyncAction('PlayerControllerBase.dispose', context: context);
 

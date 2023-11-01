@@ -11,16 +11,16 @@ class CacheManager {
   Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(AudioCacheInfoAdapter());
-    await Hive.openBox<AudioCacheInfo>('audioCache');
+    await Hive.openBox<int>('audioCache');
   }
 
-  Future<void> saveAudioCacheInfo(AudioCacheInfo audioInfo) async {
-    final boxSave = await Hive.openBox<AudioCacheInfo>('audioCache');
-    await boxSave.put(audioInfo.audioName, audioInfo);
+  Future<void> saveAudioCache(String audioName, int currentPosition) async {
+    final boxSave = await Hive.openBox<int>('audioCache');
+    await boxSave.put(audioName, currentPosition);
   }
 
-  Future<AudioCacheInfo?> getAudioCacheInfo(String audioName) async {
-    final boxSave = await Hive.openBox<AudioCacheInfo>('audioCache');
-    return boxSave.get(audioName);
+  Future<Duration> getAudioCache(String audioName) async {
+    final boxSave = await Hive.openBox<int>('audioCache');
+    return Duration(seconds: boxSave.get(audioName) ?? 0);
   }
 }

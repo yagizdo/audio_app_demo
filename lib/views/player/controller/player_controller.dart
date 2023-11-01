@@ -1,8 +1,10 @@
+import 'package:audio_app_demo/models/audio_cache_info/audio_cache_info.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../models/position_data.dart';
 import '../../../services/audio/audio_manager.dart';
+import '../../../services/core/cache_manager.dart';
 import '../../../utils/app_locator.dart';
 
 part 'player_controller.g.dart';
@@ -21,6 +23,7 @@ abstract class PlayerControllerBase with Store {
   }
 
   final AudioManager _audioManager = getIt<AudioManager>();
+  final CacheManager _cacheManager = getIt<CacheManager>();
 
   @observable
   Stream<Duration>? positionStream;
@@ -66,6 +69,16 @@ abstract class PlayerControllerBase with Store {
   @action
   Future<void> seekTo(Duration position) async {
     await _audioManager.seekTo(position);
+  }
+
+  @action
+  Future<void> saveAudioCache(String audioName, int currentPosition) async {
+    await _cacheManager.saveAudioCache(audioName, currentPosition);
+  }
+
+  @action
+  Future<Duration?> getAudioCache(String audioName) async {
+    return await _cacheManager.getAudioCache(audioName);
   }
 
   @action
