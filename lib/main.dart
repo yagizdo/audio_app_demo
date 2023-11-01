@@ -1,7 +1,8 @@
-import 'package:audio_app_demo/services/audio/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'services/audio/audio_manager.dart';
+import 'services/core/cache_manager.dart';
 import 'services/core/network/network_provider.dart';
 import 'utils/app_locator.dart';
 import 'utils/app_routes.dart';
@@ -9,11 +10,14 @@ import 'views/network_error_view.dart';
 
 final RouterConfig<Object>? _router = AppRoutes.shared.appRouterConfig();
 late final AudioManager audioManager;
+late final CacheManager cacheManager;
 
 Future<void> init() async {
   setup();
   audioManager = getIt<AudioManager>();
+  cacheManager = getIt<CacheManager>();
   await audioManager.init();
+  await cacheManager.init();
 }
 
 Future<void> main() async {

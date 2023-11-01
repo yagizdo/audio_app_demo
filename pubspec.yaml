@@ -61,6 +61,10 @@ dependencies:
   just_audio_background: ^0.0.1-beta.10
   rxdart: ^0.27.7
 
+  # Hive
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -72,6 +76,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   build_runner: ^2.4.6
+  hive_generator: ^2.0.1
   mobx_codegen: ^2.4.0
 
 # For information on the generic Dart part of this file, see the
