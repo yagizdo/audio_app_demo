@@ -29,6 +29,9 @@ abstract class PlayerControllerBase with Store {
   Stream<Duration>? positionStream;
 
   @observable
+  Duration cachedPosition = Duration.zero;
+
+  @observable
   Stream<PositionData>? positionDataStream;
 
   @observable
@@ -53,7 +56,9 @@ abstract class PlayerControllerBase with Store {
 
   @action
   Future<void> load(String url) async {
-    totalDuration = await _audioManager.load(url);
+    await getAudioCache("test");
+    print(cachedPosition);
+    totalDuration = await _audioManager.load(url, cachedPosition);
   }
 
   @action
@@ -72,13 +77,21 @@ abstract class PlayerControllerBase with Store {
   }
 
   @action
+  Future<void> seekToCache(String audioName) async {
+    final Duration cachedPosition = await _cacheManager.getAudioCache(audioName);
+    await _audioManager.seekTo(cachedPosition);
+  }
+
+  @action
   Future<void> saveAudioCache(String audioName, int currentPosition) async {
     await _cacheManager.saveAudioCache(audioName, currentPosition);
   }
 
   @action
   Future<Duration?> getAudioCache(String audioName) async {
-    return await _cacheManager.getAudioCache(audioName);
+    Duration _cachedDuration = await _cacheManager.getAudioCache(audioName);
+    cachedPosition = _cachedDuration;
+    return _cachedDuration;
   }
 
   @action

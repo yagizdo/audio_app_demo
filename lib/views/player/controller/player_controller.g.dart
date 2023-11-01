@@ -25,6 +25,22 @@ mixin _$PlayerController on PlayerControllerBase, Store {
     });
   }
 
+  late final _$cachedPositionAtom =
+      Atom(name: 'PlayerControllerBase.cachedPosition', context: context);
+
+  @override
+  Duration get cachedPosition {
+    _$cachedPositionAtom.reportRead();
+    return super.cachedPosition;
+  }
+
+  @override
+  set cachedPosition(Duration value) {
+    _$cachedPositionAtom.reportWrite(value, super.cachedPosition, () {
+      super.cachedPosition = value;
+    });
+  }
+
   late final _$positionDataStreamAtom =
       Atom(name: 'PlayerControllerBase.positionDataStream', context: context);
 
@@ -162,6 +178,14 @@ mixin _$PlayerController on PlayerControllerBase, Store {
     return _$seekToAsyncAction.run(() => super.seekTo(position));
   }
 
+  late final _$seekToCacheAsyncAction =
+      AsyncAction('PlayerControllerBase.seekToCache', context: context);
+
+  @override
+  Future<void> seekToCache(String audioName) {
+    return _$seekToCacheAsyncAction.run(() => super.seekToCache(audioName));
+  }
+
   late final _$saveAudioCacheAsyncAction =
       AsyncAction('PlayerControllerBase.saveAudioCache', context: context);
 
@@ -191,6 +215,7 @@ mixin _$PlayerController on PlayerControllerBase, Store {
   String toString() {
     return '''
 positionStream: ${positionStream},
+cachedPosition: ${cachedPosition},
 positionDataStream: ${positionDataStream},
 bufferedPositionStream: ${bufferedPositionStream},
 totalDurationStream: ${totalDurationStream},

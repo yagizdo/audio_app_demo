@@ -38,6 +38,7 @@ class _AudioProgressControlsState extends State<AudioProgressControls> {
     return StreamBuilder<PositionData>(
         stream: playerController.positionDataStream,
         builder: (context, state) {
+          playerController.saveAudioCache("test", state.data?.position.inSeconds ?? 0);
           return Column(
             children: [
               _buildProgressBar(state),
