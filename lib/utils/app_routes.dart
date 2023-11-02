@@ -24,7 +24,10 @@ class AppRoutes {
     ),
     GoRoute(
       path: player,
-      builder: (context, state) => const PlayerView(),
+      builder: (context, state) {
+        Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+        return PlayerView(audios: extra['audios'], initialIndex: extra['initialIndex']);
+      },
     ),
   ];
 

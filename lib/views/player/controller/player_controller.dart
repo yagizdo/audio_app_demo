@@ -2,6 +2,7 @@ import 'package:audio_app_demo/models/audio_cache_info/audio_cache_info.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../models/audio/audio_model.dart';
 import '../../../models/position_data.dart';
 import '../../../services/audio/audio_manager.dart';
 import '../../../services/core/cache_manager.dart';
@@ -24,6 +25,10 @@ abstract class PlayerControllerBase with Store {
 
   final AudioManager _audioManager = getIt<AudioManager>();
   final CacheManager _cacheManager = getIt<CacheManager>();
+
+
+  @observable
+  List<AudioModel>? audios;
 
   @observable
   Stream<Duration>? positionStream;
@@ -55,10 +60,10 @@ abstract class PlayerControllerBase with Store {
   }
 
   @action
-  Future<void> load(String url) async {
+  Future<void> load(String? url) async {
     await getAudioCache("test");
-    print(cachedPosition);
-    totalDuration = await _audioManager.load(url, cachedPosition);
+    totalDuration = await _audioManager.load(url: url, initialPosition: cachedPosition, isPlaylist: true, audios: audios);
+    await _audioManager.play();
   }
 
   @action
@@ -85,6 +90,11 @@ abstract class PlayerControllerBase with Store {
   @action
   Future<void> saveAudioCache(String audioName, int currentPosition) async {
     await _cacheManager.saveAudioCache(audioName, currentPosition);
+  }
+
+  @action
+  void setAudios(List<AudioModel>? audios) {
+    this.audios = audios;
   }
 
   @action

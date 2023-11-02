@@ -3,6 +3,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../models/audio/audio_model.dart';
 import '../../models/position_data.dart';
 
 class AudioManager extends IAudioManager {
@@ -21,18 +22,47 @@ class AudioManager extends IAudioManager {
   }
 
   @override
-  Future<Duration> load(String url, Duration initialPosition) async {
-    final source = AudioSource.uri(
-      Uri.parse(url),
-      tag: MediaItem(
-        id: url,
-        title: 'Tristram = Diablo',
-        artUri:
-            Uri.parse('https://i.ytimg.com/vi/Gki_L-8v_24/maxresdefault.jpg'),
-      ),
-    );
+  Future<Duration> load(
+      {String? url,
+      List<AudioModel>? audios,
+      bool? isPlaylist,
+      Duration? initialPosition,
+      int? initialIndex}) async {
+    Duration duration = Duration.zero;
+    isPlaylist = isPlaylist ?? false;
+    if (isPlaylist) {
+      if (audios != null) {
+        List<AudioSource> audioSources = audios.map((e) => AudioSource.uri(
+          Uri.parse(e.url),
+          tag: MediaItem(
+            id: e.id,
+            title: e.title,
+            artUri: Uri.parse(e.artUri),
+          ),
+        )).toList();
+        final playlist = ConcatenatingAudioSource(
+          children: audioSources,
+        );
 
-    return await _audioPlayer.setAudioSource(source, initialPosition: initialPosition, preload: true) ?? Duration.zero;
+        duration = await _audioPlayer.setAudioSource(playlist, initialPosition: initialPosition, initialIndex: initialIndex ?? 0, preload: true) ?? Duration.zero;
+      }
+
+    } else {
+      if (url != null) {
+        final source = AudioSource.uri(
+          Uri.parse(url),
+          tag: MediaItem(
+            id: url,
+            title: 'Tristram = Diablo',
+            artUri:
+            Uri.parse('https://i.ytimg.com/vi/Gki_L-8v_24/maxresdefault.jpg'),
+          ),
+        );
+        duration = await _audioPlayer.setAudioSource(source, initialPosition: initialPosition, preload: true) ?? Duration.zero;
+      }
+    }
+
+    return duration;
   }
 
   @override

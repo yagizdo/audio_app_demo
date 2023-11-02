@@ -1,9 +1,16 @@
 import 'package:audio_app_demo/models/position_data.dart';
 import 'package:just_audio/just_audio.dart';
 
+import '../../models/audio/audio_model.dart';
+
 abstract class IAudioManager {
   Future<void> init();
-  Future<Duration> load(String url, Duration initialPosition);
+  Future<Duration> load(
+      {String? url,
+      List<AudioModel>? audios,
+      bool? isPlaylist,
+      Duration? initialPosition,
+      int? initialIndex});
   Future<void> play();
   Future<void> pause();
   Future<void> seekTo(Duration position);

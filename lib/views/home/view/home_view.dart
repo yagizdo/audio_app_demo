@@ -1,7 +1,9 @@
 import 'package:audio_app_demo/models/audio/audio_model.dart';
 import 'package:audio_app_demo/utils/app_constants.dart';
+import 'package:audio_app_demo/utils/app_locator.dart';
 import 'package:audio_app_demo/utils/app_textstyles.dart';
 import 'package:audio_app_demo/views/home/widget/audios/audios_list.dart';
+import 'package:audio_app_demo/views/player/controller/player_controller.dart';
 import 'package:audio_app_demo/widgets/main_widgets/main_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PlayerController playerController = getIt<PlayerController>();
     List<AudioModel> audios = [
       AudioModel(
         id: '0',
@@ -47,6 +50,7 @@ class HomeView extends StatelessWidget {
         url: 'https://mp3files.cc/dl/d0ZjeUlyTStSQkRiZmZrVk95M2dTUT/kasim-seren-ask-benimle.mp3',
       ),
     ];
+    playerController.setAudios(audios);
     return MainLayout(
       content: Center(
         child: Column(
