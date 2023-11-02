@@ -222,17 +222,17 @@ mixin _$PlayerController on PlayerControllerBase, Store {
       AsyncAction('PlayerControllerBase.saveAudioCache', context: context);
 
   @override
-  Future<void> saveAudioCache(String audioName, int currentPosition) {
+  Future<void> saveAudioCache(int currentPosition) {
     return _$saveAudioCacheAsyncAction
-        .run(() => super.saveAudioCache(audioName, currentPosition));
+        .run(() => super.saveAudioCache(currentPosition));
   }
 
   late final _$getAudioCacheAsyncAction =
       AsyncAction('PlayerControllerBase.getAudioCache', context: context);
 
   @override
-  Future<Duration?> getAudioCache(String audioName) {
-    return _$getAudioCacheAsyncAction.run(() => super.getAudioCache(audioName));
+  Future<Duration?> getAudioCache() {
+    return _$getAudioCacheAsyncAction.run(() => super.getAudioCache());
   }
 
   late final _$disposeAsyncAction =

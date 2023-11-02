@@ -62,7 +62,7 @@ abstract class PlayerControllerBase with Store {
 
   @action
   Future<void> load(String? url) async {
-    //await getAudioCache("test");
+    await getAudioCache();
     totalDuration = await _audioManager.load(
         url: url,
         initialPosition: cachedPosition,
@@ -95,8 +95,9 @@ abstract class PlayerControllerBase with Store {
   }
 
   @action
-  Future<void> saveAudioCache(String audioName, int currentPosition) async {
-    await _cacheManager.saveAudioCache(audioName, currentPosition);
+  Future<void> saveAudioCache(int currentPosition) async {
+    String audioID = audios![selectedIndex!].id;
+    await _cacheManager.saveAudioCache(audioID, currentPosition);
   }
 
   @action
@@ -110,8 +111,9 @@ abstract class PlayerControllerBase with Store {
   }
 
   @action
-  Future<Duration?> getAudioCache(String audioName) async {
-    Duration _cachedDuration = await _cacheManager.getAudioCache(audioName);
+  Future<Duration?> getAudioCache() async {
+    String audioID = audios![selectedIndex!].id;
+    Duration _cachedDuration = await _cacheManager.getAudioCache(audioID);
     cachedPosition = _cachedDuration;
     return _cachedDuration;
   }
