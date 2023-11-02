@@ -3,7 +3,7 @@ import 'package:just_audio/just_audio.dart';
 
 abstract class IAudioManager {
   Future<void> init();
-  Future<Duration> load(String url);
+  Future<Duration> load(String url, Duration initialPosition);
   Future<void> play();
   Future<void> pause();
   Future<void> seekTo(Duration position);

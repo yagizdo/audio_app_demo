@@ -14,12 +14,14 @@ class AudioManager extends IAudioManager {
     await JustAudioBackground.init(
       androidNotificationChannelId: 'com.yagizdo.audio_app_demo.channel.audio',
       androidNotificationChannelName: 'Audio playback',
+      rewindInterval: const Duration(seconds: 15),
+      fastForwardInterval: const Duration(seconds: 15),
       androidNotificationOngoing: true,
     );
   }
 
   @override
-  Future<Duration> load(String url) async {
+  Future<Duration> load(String url, Duration initialPosition) async {
     final source = AudioSource.uri(
       Uri.parse(url),
       tag: MediaItem(
@@ -30,7 +32,7 @@ class AudioManager extends IAudioManager {
       ),
     );
 
-    return await _audioPlayer.setAudioSource(source) ?? Duration.zero;
+    return await _audioPlayer.setAudioSource(source, initialPosition: initialPosition, preload: true) ?? Duration.zero;
   }
 
   @override
