@@ -7,11 +7,24 @@ import '../../../models/audio/audio_model.dart';
 import '../../../utils/app_locator.dart';
 import '../controller/player_controller.dart';
 
-class PlayerView extends StatelessWidget {
-  const PlayerView({super.key, this.audios, this.initialIndex});
+class PlayerView extends StatefulWidget {
+  const PlayerView({super.key, this.audios});
 
   final List<AudioModel>? audios;
-  final int? initialIndex;
+
+  @override
+  State<PlayerView> createState() => _PlayerViewState();
+}
+
+class _PlayerViewState extends State<PlayerView> {
+  late final PlayerController playerController;
+
+  @override
+  void initState() {
+    super.initState();
+    playerController = getIt<PlayerController>();
+    playerController.load("");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +32,6 @@ class PlayerView extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    final playerViewModel = getIt<PlayerController>();
-    playerViewModel.load("");
-
     return const Column(
       children: [
         AudioMedia(),

@@ -14,7 +14,7 @@ class AudiosList extends StatelessWidget {
       itemCount: audios.length,
       itemBuilder: (context, index) {
         final audio = audios[index];
-        return AudiosCard(audio: audio);
+        return AudiosCard(audio: audio, index: index,);
       },
     );
   }

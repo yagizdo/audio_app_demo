@@ -3,6 +3,7 @@ import 'package:audio_app_demo/views/player/view/player_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../models/audio/audio_model.dart';
 import '../views/error_view.dart';
 
 class AppRoutes {
@@ -26,7 +27,8 @@ class AppRoutes {
       path: player,
       builder: (context, state) {
         Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
-        return PlayerView(audios: extra['audios'], initialIndex: extra['initialIndex']);
+        List<AudioModel> audios = extra['audios'] as List<AudioModel>;
+        return PlayerView(audios: audios);
       },
     ),
   ];

@@ -13,7 +13,6 @@ part 'player_controller.g.dart';
 class PlayerController = PlayerControllerBase with _$PlayerController;
 
 abstract class PlayerControllerBase with Store {
-
   PlayerControllerBase() {
     positionStream = _audioManager.position.asBroadcastStream();
     bufferedPositionStream = _audioManager.bufferedPosition.asBroadcastStream();
@@ -26,9 +25,11 @@ abstract class PlayerControllerBase with Store {
   final AudioManager _audioManager = getIt<AudioManager>();
   final CacheManager _cacheManager = getIt<CacheManager>();
 
-
   @observable
   List<AudioModel>? audios;
+
+  @observable
+  int? selectedIndex;
 
   @observable
   Stream<Duration>? positionStream;
@@ -61,8 +62,13 @@ abstract class PlayerControllerBase with Store {
 
   @action
   Future<void> load(String? url) async {
-    await getAudioCache("test");
-    totalDuration = await _audioManager.load(url: url, initialPosition: cachedPosition, isPlaylist: true, audios: audios);
+    //await getAudioCache("test");
+    totalDuration = await _audioManager.load(
+        url: url,
+        initialPosition: cachedPosition,
+        isPlaylist: true,
+        audios: audios,
+        initialIndex: selectedIndex);
     await _audioManager.play();
   }
 
@@ -83,7 +89,8 @@ abstract class PlayerControllerBase with Store {
 
   @action
   Future<void> seekToCache(String audioName) async {
-    final Duration cachedPosition = await _cacheManager.getAudioCache(audioName);
+    final Duration cachedPosition =
+        await _cacheManager.getAudioCache(audioName);
     await _audioManager.seekTo(cachedPosition);
   }
 
@@ -95,6 +102,11 @@ abstract class PlayerControllerBase with Store {
   @action
   void setAudios(List<AudioModel>? audios) {
     this.audios = audios;
+  }
+
+  @action
+  void setSelectedIndex(int? index) {
+    selectedIndex = index;
   }
 
   @action

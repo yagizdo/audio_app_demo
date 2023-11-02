@@ -25,6 +25,22 @@ mixin _$PlayerController on PlayerControllerBase, Store {
     });
   }
 
+  late final _$selectedIndexAtom =
+      Atom(name: 'PlayerControllerBase.selectedIndex', context: context);
+
+  @override
+  int? get selectedIndex {
+    _$selectedIndexAtom.reportRead();
+    return super.selectedIndex;
+  }
+
+  @override
+  set selectedIndex(int? value) {
+    _$selectedIndexAtom.reportWrite(value, super.selectedIndex, () {
+      super.selectedIndex = value;
+    });
+  }
+
   late final _$positionStreamAtom =
       Atom(name: 'PlayerControllerBase.positionStream', context: context);
 
@@ -242,9 +258,21 @@ mixin _$PlayerController on PlayerControllerBase, Store {
   }
 
   @override
+  void setSelectedIndex(int? index) {
+    final _$actionInfo = _$PlayerControllerBaseActionController.startAction(
+        name: 'PlayerControllerBase.setSelectedIndex');
+    try {
+      return super.setSelectedIndex(index);
+    } finally {
+      _$PlayerControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 audios: ${audios},
+selectedIndex: ${selectedIndex},
 positionStream: ${positionStream},
 cachedPosition: ${cachedPosition},
 positionDataStream: ${positionDataStream},

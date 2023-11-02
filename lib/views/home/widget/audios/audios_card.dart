@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../models/audio/audio_model.dart';
+import '../../../../utils/app_locator.dart';
+import '../../../player/controller/player_controller.dart';
 
 class AudiosCard extends StatelessWidget {
-  const AudiosCard({super.key, required this.audio});
+  const AudiosCard({super.key, required this.audio, required this.index});
 
   final AudioModel audio;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final playerViewModel = getIt<PlayerController>();
+
     return TapWrapper(
       onTap: () {
-        context.push('/player', extra: {'audios': [audio], 'initialIndex': 0});
+        playerViewModel.setSelectedIndex(index);
+        context.push('/player', extra: {'audios': [audio]});
       },
       child: Card(
         child: ListTile(
