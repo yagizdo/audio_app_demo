@@ -1,6 +1,5 @@
 import 'package:hive_flutter/adapters.dart';
 
-import '../../models/audio_cache_info/audio_cache_info.dart';
 
 class CacheManager {
   static final CacheManager _instance = CacheManager._internal();
@@ -10,7 +9,6 @@ class CacheManager {
 
   Future<void> init() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(AudioCacheInfoAdapter());
     await Hive.openBox<int>('audioCache');
   }
 
