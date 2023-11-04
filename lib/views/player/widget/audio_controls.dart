@@ -1,9 +1,12 @@
 import 'package:audio_app_demo/utils/app_locator.dart';
 import 'package:audio_app_demo/views/player/controller/player_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:headset_connection_event/headset_event.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:mobx/mobx.dart';
 
-class AudioControls extends StatelessWidget {
+class AudioControls extends StatefulWidget {
   const AudioControls(
       {super.key, required this.totalDuration, required this.currentPosition});
 
@@ -11,32 +14,60 @@ class AudioControls extends StatelessWidget {
   final Duration currentPosition;
 
   @override
+  State<AudioControls> createState() => _AudioControlsState();
+}
+
+class _AudioControlsState extends State<AudioControls> {
+  late final HeadsetEvent _headsetEvent;
+  late final PlayerController playerController;
+
+
+  @override
+  void initState() {
+    super.initState();
+    playerController = getIt<PlayerController>();
+    _headsetEvent = HeadsetEvent();
+    _headsetEvent.getCurrentState.then((value) {
+      playerController.setHeadsetState(value ?? HeadsetState.DISCONNECT);
+    });
+    _headsetEvent.setListener((value) {
+      playerController.setHeadsetState(value);
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     return _buildBody(context);
   }
 
   Widget _buildBody(context) {
-    final PlayerController playerController = getIt<PlayerController>();
-    return StreamBuilder<PlayerState>(
-      stream: playerController.playerStateStream,
-      builder: (context, snapshot) {
-        final playerState = snapshot.data;
-        final processingState = playerState?.processingState;
-        final playing = playerState?.playing;
-        if (!(playing ?? false)) {
-          return _buildButtonsRow(playing ?? false, () {
-            playerController.play();
-          });
-        } else if (processingState != ProcessingState.completed) {
-          return _buildButtonsRow(playing ?? false, () {
-            playerController.pause();
-          });
-        }
-        return _buildButtonsRow(playing ?? false, () {
-          playerController.seekTo(Duration.zero);
-          playerController.play();
-        });
-      },
+    return Observer(
+      builder: (_) {
+        return StreamBuilder<PlayerState>(
+          stream: playerController.playerStateStream,
+          builder: (context, snapshot) {
+            final playerState = snapshot.data;
+            final processingState = playerState?.processingState;
+            final playing = playerState?.playing;
+            if (!(playing ?? false)) {
+              return _buildButtonsRow(playing ?? false, () {
+                if (playerController.headsetState != HeadsetState.DISCONNECT) {
+                  playerController.play();
+                }
+              });
+            } else if (processingState != ProcessingState.completed) {
+              return _buildButtonsRow(playing ?? false, () {
+                playerController.pause();
+              });
+            }
+            return _buildButtonsRow(playing ?? false, () {
+              if (playerController.headsetState != HeadsetState.DISCONNECT) {
+                playerController.seekTo(Duration.zero);
+                playerController.play();
+              }
+            });
+          },
+        );
+      }
     );
   }
 
@@ -62,15 +93,15 @@ class AudioControls extends StatelessWidget {
 
     if (isForward) {
       targetPosition =
-          currentPosition + const Duration(seconds: skipDurationSeconds);
+          widget.currentPosition + const Duration(seconds: skipDurationSeconds);
 
       // Eğer ileri alma sonunda sesin sonuna ulaşıldıysa, targetPosition'ı sona getir.
-      if (targetPosition >= totalDuration) {
-        targetPosition = totalDuration;
+      if (targetPosition >= widget.totalDuration) {
+        targetPosition = widget.totalDuration;
       }
     } else {
       targetPosition =
-          currentPosition - const Duration(seconds: skipDurationSeconds);
+          widget.currentPosition - const Duration(seconds: skipDurationSeconds);
 
       // Eğer geri alma sonunda sesin başına ulaşıldıysa, targetPosition'ı başa getir.
       if (targetPosition < Duration.zero) {

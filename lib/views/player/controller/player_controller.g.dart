@@ -9,6 +9,22 @@ part of 'player_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$PlayerController on PlayerControllerBase, Store {
+  late final _$headsetStateAtom =
+      Atom(name: 'PlayerControllerBase.headsetState', context: context);
+
+  @override
+  HeadsetState get headsetState {
+    _$headsetStateAtom.reportRead();
+    return super.headsetState;
+  }
+
+  @override
+  set headsetState(HeadsetState value) {
+    _$headsetStateAtom.reportWrite(value, super.headsetState, () {
+      super.headsetState = value;
+    });
+  }
+
   late final _$audiosAtom =
       Atom(name: 'PlayerControllerBase.audios', context: context);
 
@@ -269,8 +285,20 @@ mixin _$PlayerController on PlayerControllerBase, Store {
   }
 
   @override
+  void setHeadsetState(HeadsetState state) {
+    final _$actionInfo = _$PlayerControllerBaseActionController.startAction(
+        name: 'PlayerControllerBase.setHeadsetState');
+    try {
+      return super.setHeadsetState(state);
+    } finally {
+      _$PlayerControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+headsetState: ${headsetState},
 audios: ${audios},
 selectedIndex: ${selectedIndex},
 positionStream: ${positionStream},

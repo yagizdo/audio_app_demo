@@ -1,3 +1,4 @@
+import 'package:headset_connection_event/headset_event.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mobx/mobx.dart';
 
@@ -23,6 +24,10 @@ abstract class PlayerControllerBase with Store {
 
   final AudioManager _audioManager = getIt<AudioManager>();
   final CacheManager _cacheManager = getIt<CacheManager>();
+
+
+  @observable
+  HeadsetState headsetState = HeadsetState.DISCONNECT;
 
   @observable
   List<AudioModel>? audios;
@@ -68,7 +73,10 @@ abstract class PlayerControllerBase with Store {
         isPlaylist: true,
         audios: audios,
         initialIndex: selectedIndex);
-    await _audioManager.play();
+    print('totalDuration: $headsetState');
+    if (headsetState != HeadsetState.DISCONNECT) {
+      await _audioManager.play();
+    }
   }
 
   @action
@@ -107,6 +115,11 @@ abstract class PlayerControllerBase with Store {
   @action
   void setSelectedIndex(int? index) {
     selectedIndex = index;
+  }
+
+  @action
+  void setHeadsetState(HeadsetState state) {
+    headsetState = state;
   }
 
   @action
