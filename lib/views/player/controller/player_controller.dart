@@ -73,7 +73,6 @@ abstract class PlayerControllerBase with Store {
         isPlaylist: true,
         audios: audios,
         initialIndex: selectedIndex);
-    print('totalDuration: $headsetState');
     if (headsetState != HeadsetState.DISCONNECT) {
       await _audioManager.play();
     }
